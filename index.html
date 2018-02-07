@@ -12,11 +12,10 @@
     <script src="https://rawgit.com/rdub80/aframe-shake2show-component/master/dist/aframe-shake2show-component.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.6.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
-    <script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>
     <script src="components/selectable.js"></script>
     <script src="components/stackable.js"></script>
     <script src="components/click-events.js"></script>
-    <script src="components/teleportable.js"></script>
+    <script src="components/pressable.js"></script>
 
 
 </head>
@@ -40,6 +39,20 @@
                           material="shader: standard; color: #999999"></a-entity>
             </a-entity>
         </script>
+
+        <script id="button" type="text/html">
+            <a-entity class="geometry"
+                      geometry="primitive: circle; radius: 0.2"
+                      material="side: double; transparent: true; opacity: 0"
+                      event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                      event-set__4="_event: mouseleave; scale: 1 1 1"
+                      sound="on: click; src: #click-sound"
+                      pressable="on: click; src: ${behavior}">
+                <a-entity geometry="primitive: ring; radiusInner: 0.16; radiusOuter: 0.2"
+                          material="side: double; color: #ffb380"></a-entity>
+                <a-entity text="width: 4.5; anchor: center; align: center; color: #999999; value: ${behavior}"></a-entity>
+            </a-entity>
+        </script>
     </a-assets>
 
 
@@ -55,8 +68,8 @@
     </a-entity>
 
     <!-- camera and cursor -->
-    <a-entity id="avatar" position="0 1 0" wasd-controls click-events teleportable>
-        <a-entity id="camera" camera look-controls mouse-cursor>
+    <a-entity id="avatar" position="0 1 0" wasd-controls>
+        <a-entity id="camera" camera look-controls>
             <a-cursor id="cursor"
                       animation__click="property: scale; startEvents: click; from: 0.1 0.1 0.1; to: 1 1 1; dur: 150"
                       animation__fusing="property: fusing; startEvents: fusing; from: 1 1 1; to: 0.1 0.1 0.1; dur: 1500"
@@ -124,48 +137,61 @@
                       rotation="0 0 0"
                       data-primitive="torusKnot"
                       data-scale="0.05"></a-entity>
+            <a-entity template="src: #button"
+                      position="-0.25 -1 0"
+                      rotation="0 0 0"
+                      data-behavior="TP"></a-entity>
+            <a-entity template="src: #button"
+                      position="0.25 -1 0"
+                      rotation="0 0 0"
+                      data-behavior="OP"></a-entity>
         </a-entity>
     </a-entity>
 
     <a-entity class="geometry" id="box-prototype" visible="false">
         <a-entity geometry="primitive: box; depth: 0.4; height: 0.4; width: 0.4" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="cone-prototype" visible="false">
         <a-entity geometry="primitive: cone; height: 0.4; radius-bottom: 0.2; radius-top: 0" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="cylinder-prototype" visible="false">
         <a-entity geometry="primitive: cylinder; radius: 0.2; height: 0.4" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="dodecahedron-prototype" visible="false">
         <a-entity geometry="primitive: dodecahedron; radius: 0.2" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="octahedron-prototype" visible="false">
         <a-entity geometry="primitive: octahedron; radius: 0.2" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="octahedron-prototype" visible="false">
         <a-entity geometry="primitive: octahedron; radius: 0.2" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="sphere-prototype" visible="false">
         <a-entity geometry="primitive: sphere; radius: 0.2" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="tetrahedron-prototype" visible="false">
         <a-entity geometry="primitive: tetrahedron; radius: 0.2" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="torus-prototype" visible="false">
         <a-entity geometry="primitive: torus; radius: 0.12; radiusTubular: 0.04" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
     <a-entity class="geometry" id="torusKnot-prototype" visible="false">
         <a-entity geometry="primitive: torusKnot; radius: 0.12; radiusTubular: 0.02" rotation="90 0 0"
-                  material="shader: standard; color: #999999" stackable="on: click"></a-entity>
+                  material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
+    </a-entity>
+
+    <a-entity id="object-marker" visible="false" look-at="[camera]">
+        <a-entity geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.35"
+                  material="side: double; color: #66b3ff"></a-entity>
     </a-entity>
 
 

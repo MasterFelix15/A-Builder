@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="JavaScriptLibraryMappings">
-    <file url="PROJECT" libraries="{aframe-crawling-cursor, aframe-look-at-component, aframe-shake2show-component}" />
+    <file url="PROJECT" libraries="{aframe-crawling-cursor, aframe-look-at-component, aframe-shake2show-component, aframe-text-component}" />
   </component>
 </project>

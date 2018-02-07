@@ -29,6 +29,13 @@ AFRAME.registerComponent('stackable', {
             var menuEl = document.querySelector('#menu');
             menuEl.setAttribute('position', new THREE.Vector3(point.x, point.y+1, point.z));
             menuEl.setAttribute('visible', true);
+
+            var oMenuEL = document.querySelector('#object-marker');
+            oMenuEL.setAttribute('visible', false);
+            if (el.getAttribute('id') == null ) {
+                oMenuEL.setAttribute('position', el.parentElement.getAttribute('position'));
+                oMenuEL.setAttribute('visible', true);
+            }
         });
     }
 });

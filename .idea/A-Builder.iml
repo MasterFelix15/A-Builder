@@ -11,5 +11,6 @@
     <orderEntry type="library" name="aframe-shake2show-component" level="application" />
     <orderEntry type="library" name="aframe-crawling-cursor" level="application" />
     <orderEntry type="library" name="aframe-look-at-component" level="application" />
+    <orderEntry type="library" name="aframe-text-component" level="application" />
   </component>
 </module>
