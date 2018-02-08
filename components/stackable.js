@@ -30,12 +30,25 @@ AFRAME.registerComponent('stackable', {
             menuEl.setAttribute('position', new THREE.Vector3(point.x, point.y+1, point.z));
             menuEl.setAttribute('visible', true);
 
-            var oMenuEL = document.querySelector('#object-marker');
-            oMenuEL.setAttribute('visible', false);
             if (el.getAttribute('id') == null ) {
-                oMenuEL.setAttribute('position', el.parentElement.getAttribute('position'));
-                oMenuEL.setAttribute('visible', true);
+                var markedEl = document.querySelector('#marked');
+                if (markedEl != null) {
+                    markedEl.setAttribute('material', "shader: standard; color: #999999");
+                    markedEl.removeAttribute('id');
+                }
+                el.setAttribute('material', "shader: standard; color: #355C7D");
+                el.setAttribute('id', "marked");
             }
+
+            console.log(el.getAttribute('id')==="plane");
+
+            var axisEl = document.querySelector('#axis-system');
+            var copy = axisEl.cloneNode(true);
+            el.appendChild(copy);
+            axisEl.parentNode.removeChild(axisEl);
+
+            axisEl = document.querySelector('#axis-system');
+            axisEl.setAttribute('visible', el.getAttribute('id')!=="plane");
         });
     }
 });

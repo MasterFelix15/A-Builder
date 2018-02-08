@@ -14,7 +14,6 @@
     <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
     <script src="components/selectable.js"></script>
     <script src="components/stackable.js"></script>
-    <script src="components/click-events.js"></script>
     <script src="components/pressable.js"></script>
 
 
@@ -22,7 +21,7 @@
 <body>
 <a-scene stats>
     <a-assets>
-        <audio id="click-sound" crossorigin="anonymous" src="assets/click-01.wav"></audio>
+        <audio id="click-sound" crossorigin="anonymous" src="assets/click-01.mp3"></audio>
 
         <script id="geometry" type="text/html">
             <a-entity class="geometry"
@@ -49,8 +48,8 @@
                       sound="on: click; src: #click-sound"
                       pressable="on: click; src: ${behavior}">
                 <a-entity geometry="primitive: ring; radiusInner: 0.16; radiusOuter: 0.2"
-                          material="side: double; color: #ffb380"></a-entity>
-                <a-entity text="width: 4.5; anchor: center; align: center; color: #999999; value: ${behavior}"></a-entity>
+                          material="side: double; color: #cccccc"></a-entity>
+                <a-entity text="width: 5.5; anchor: center; align: center; color: #666666; value: ${text}"></a-entity>
             </a-entity>
         </script>
     </a-assets>
@@ -81,7 +80,7 @@
     </a-entity>
 
     <!-- dynamic components: marker, menu and prototypes-->
-    <a-entity id="marker" visible="false">
+    <a-entity id="marker" visible="true">
         <a-entity geometry="primitive: ring; radiusInner: 0.05; radiusOuter: 0.07"
                   material="side: double; color: #6EBAA7"
                   position="0 0 0.005" rotation="0 0 0"></a-entity>
@@ -91,62 +90,136 @@
     </a-entity>
 
     <a-entity id="menu" visible="false" look-at="[camera]">
-        <a-entity scale="0.6 0.6 0.6">
-            <a-entity template="src: #geometry"
-                      position="0 0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="box"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
+        <a-entity look-at="[camera]" position="-0.6 0 0.25">
+            <a-entity scale="0.6 0.6 0.6">
+                <a-entity template="src: #geometry"
+                          position="0 0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="box"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="0 0 0"
+                          rotation="0 0 0"
+                          data-primitive="cone"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="0 -0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="cylinder"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="dodecahedron"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="0.5 0 0"
+                          rotation="0 0 0"
+                          data-primitive="octahedron"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="sphere"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="-0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="tetrahedron"
+                          data-scale="0.1"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="-0.5 0 0"
+                          rotation="0 0 0"
+                          data-primitive="torus"
+                          data-scale="0.05"></a-entity>
+                <a-entity template="src: #geometry"
+                          position="-0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-primitive="torusKnot"
+                          data-scale="0.05"></a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity look-at="[camera]" scale="0.6 0.6 0.6">
+            <a-entity template="src: #button"
                       position="0 0 0"
                       rotation="0 0 0"
-                      data-primitive="cone"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="0 -0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="cylinder"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="0.5 0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="dodecahedron"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="0.5 0 0"
-                      rotation="0 0 0"
-                      data-primitive="octahedron"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="0.5 -0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="sphere"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="-0.5 0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="tetrahedron"
-                      data-scale="0.1"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="-0.5 0 0"
-                      rotation="0 0 0"
-                      data-primitive="torus"
-                      data-scale="0.05"></a-entity>
-            <a-entity template="src: #geometry"
-                      position="-0.5 -0.5 0"
-                      rotation="0 0 0"
-                      data-primitive="torusKnot"
-                      data-scale="0.05"></a-entity>
-            <a-entity template="src: #button"
-                      position="-0.25 -1 0"
-                      rotation="0 0 0"
-                      data-behavior="TP"></a-entity>
-            <a-entity template="src: #button"
-                      position="0.25 -1 0"
-                      rotation="0 0 0"
-                      data-behavior="OP"></a-entity>
+                      data-behavior="tp"
+                      data-text="T"></a-entity>
+        </a-entity>
+
+        <a-entity look-at="[camera]" position="0.6 0 0.25">
+            <a-entity scale="0.6 0.6 0.6">
+                <a-entity template="src: #button"
+                          position="0 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="size-"
+                          data-text="-"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 0 0"
+                          rotation="0 0 0"
+                          data-behavior="rotation-"
+                          data-text="-"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="position-"
+                          data-text="-"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="size+"
+                          data-text="+"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="rotation+"
+                          data-text="+"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="position+"
+                          data-text="+"></a-entity>
+                <a-entity template="src: #button"
+                          position="-0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="axis-x"
+                          data-text="X"></a-entity>
+                <a-entity template="src: #button"
+                          position="-0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="axis-y"
+                          data-text="Y"></a-entity>
+                <a-entity template="src: #button"
+                          position="-0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="axis-z"
+                          data-text="Z"></a-entity>
+            </a-entity>
         </a-entity>
     </a-entity>
+
+    <a-entity id="axis-system">
+        <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
+                  material="side: double; color: #2A363B"
+                  position="0 0.2 0" rotation="0 0 0"></a-entity>
+        <a-entity id="z-arrow" geometry="primitive: cone; radius-bottom: 0.02; radius-top: 0; height: 0.1"
+                  material="side: double; color: #2A363B"
+                  position="0 0.4 0" rotation="0 0 0"></a-entity>
+        <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
+                  material="side: double; color: #2A363B"
+                  position="0.2 0 0" rotation="0 0 -90"></a-entity>
+        <a-entity id="x-arrow" geometry="primitive: cone; radius-bottom: 0.02; radius-top: 0; height: 0.1"
+                  material="side: double; color: #2A363B"
+                  position="0.4 0 0" rotation="0 0 -90"></a-entity>
+        <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
+                  material="side: double; color: #2A363B"
+                  position="0 0 0.2" rotation="90 0 0"></a-entity>
+        <a-entity id="y-arrow" geometry="primitive: cone; radius-bottom: 0.02; radius-top: 0; height: 0.1"
+                  material="side: double; color: #2A363B"
+                  position="0 0 0.4" rotation="90 0 0"></a-entity>
+    </a-entity>
+
 
     <a-entity class="geometry" id="box-prototype" visible="false">
         <a-entity geometry="primitive: box; depth: 0.4; height: 0.4; width: 0.4" rotation="90 0 0"
@@ -188,12 +261,6 @@
         <a-entity geometry="primitive: torusKnot; radius: 0.12; radiusTubular: 0.02" rotation="90 0 0"
                   material="shader: standard; color: #999999" sound="on: click; src: #click-sound" stackable="on: click"></a-entity>
     </a-entity>
-
-    <a-entity id="object-marker" visible="false" look-at="[camera]">
-        <a-entity geometry="primitive: ring; radiusInner: 0.3; radiusOuter: 0.35"
-                  material="side: double; color: #66b3ff"></a-entity>
-    </a-entity>
-
 
 
 </a-scene>

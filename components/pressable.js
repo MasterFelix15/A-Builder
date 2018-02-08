@@ -10,7 +10,7 @@ AFRAME.registerComponent('pressable', {
 
         el.addEventListener(data.on, function (evt) {
             switch (data.src) {
-                case "TP":
+                case "tp":
                     var markerEl = document.querySelector('#marker');
                     var menuEl = document.querySelector('#menu');
                     var avatarEl = document.querySelector('#avatar');
@@ -19,8 +19,7 @@ AFRAME.registerComponent('pressable', {
                     markerEl.setAttribute('visible', false);
                     menuEl.setAttribute('visible', false);
                     break;
-                case "OP":
-                    var oMenuEl = document.querySelector('#object-marker');
+                case "op":
                     break;
             }
 
