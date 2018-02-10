@@ -38,6 +38,10 @@ AFRAME.registerComponent('selectable', {
             markerEl.setAttribute('visible', "false");
             menuEl.setAttribute('visible', "false");
 
+            entityEl = document.querySelector("#" + data.src + "-prototype");
+            entityEl.setAttribute('visible', false);
+            entityEl.setAttribute('position', "0 0 0");
+
         });
     }
 });
