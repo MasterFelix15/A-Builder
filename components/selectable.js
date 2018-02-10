@@ -33,7 +33,7 @@ AFRAME.registerComponent('selectable', {
 
             var lookAtTarget = new THREE.Vector3().addVectors(calculated_position, direction);
             entityEl.object3D.lookAt(lookAtTarget);
-            entityEl.setAttribute('id', data.src);
+            entityEl.removeAttribute('id');
 
             markerEl.setAttribute('visible', "false");
             menuEl.setAttribute('visible', "false");

@@ -142,6 +142,11 @@
 
         <a-entity look-at="[camera]" scale="0.6 0.6 0.6">
             <a-entity template="src: #button"
+                      position="0 0.5 0"
+                      rotation="0 0 0"
+                      data-behavior="del"
+                      data-text="D"></a-entity>
+            <a-entity template="src: #button"
                       position="0 0 0"
                       rotation="0 0 0"
                       data-behavior="tp"
@@ -199,18 +204,18 @@
         </a-entity>
     </a-entity>
 
-    <a-entity id="axis-system">
+    <a-entity id="axis-system" visible="false">
         <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
                   material="side: double; color: #2A363B"
-                  position="0 0.2 0" rotation="0 0 0"></a-entity>
+                  position="0 -0.2 0" rotation="0 0 0"></a-entity>
         <a-entity id="z-arrow" geometry="primitive: cone; radius-bottom: 0.02; radius-top: 0; height: 0.1"
                   material="side: double; color: #2A363B"
-                  position="0 0.4 0" rotation="0 0 0"></a-entity>
+                  position="0 -0.4 0" rotation="180 0 0"></a-entity>
         <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
                   material="side: double; color: #2A363B"
                   position="0.2 0 0" rotation="0 0 -90"></a-entity>
         <a-entity id="x-arrow" geometry="primitive: cone; radius-bottom: 0.02; radius-top: 0; height: 0.1"
-                  material="side: double; color: #2A363B"
+                  material="side: double; color: #FF4E50"
                   position="0.4 0 0" rotation="0 0 -90"></a-entity>
         <a-entity geometry="primitive: cylinder; radius: 0.004; height: 0.4"
                   material="side: double; color: #2A363B"

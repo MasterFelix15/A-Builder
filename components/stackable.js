@@ -40,11 +40,10 @@ AFRAME.registerComponent('stackable', {
                 el.setAttribute('id', "marked");
             }
 
-            console.log(el.getAttribute('id')==="plane");
 
             var axisEl = document.querySelector('#axis-system');
             var copy = axisEl.cloneNode(true);
-            el.appendChild(copy);
+            el.parentNode.appendChild(copy);
             axisEl.parentNode.removeChild(axisEl);
 
             axisEl = document.querySelector('#axis-system');
