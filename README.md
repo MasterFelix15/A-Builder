@@ -11,7 +11,7 @@ Build in VR in your browser.
 ## Local Development
 
 ```bash
-git clone git@github.com:aframevr/a-painter && cd a-painter
+git clone git@github.com:MasterFelix15/A-Builder.git && cd A-Builder
 ```
 
-Then, load [`http://localhost:8080`](http://localhost:8080) in your browser.
+Then, load [`file://A-Builder/index.html`](file://A-Builder/index.html) in your browser.
