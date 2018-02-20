@@ -23,6 +23,15 @@
     <a-assets>
         <audio id="click-sound" crossorigin="anonymous" src="assets/click-01.mp3"></audio>
 
+        <img id="icon-geometry" src="assets/005-3d-cube.png">
+        <img id="icon-teleport" src="assets/006-click-cursor.png">
+        <img id="icon-property" src="assets/001-hands.png">
+        <img id="icon-resize" src="assets/004-arrows.png">
+        <img id="icon-rotate" src="assets/002-arrows-1.png">
+        <img id="icon-reposition" src="assets/003-finger-swipe.png">
+        <img id="icon-delete" src="assets/garbage.png">
+
+
         <script id="geometry" type="text/html">
             <a-entity class="geometry"
                       geometry="primitive: circle; radius: 0.2"
@@ -50,6 +59,20 @@
                 <a-entity geometry="primitive: ring; radiusInner: 0.16; radiusOuter: 0.2"
                           material="side: double; color: #cccccc"></a-entity>
                 <a-entity text="width: 5.5; anchor: center; align: center; color: #666666; value: ${text}"></a-entity>
+            </a-entity>
+        </script>
+
+        <script id="img-button" type="text/html">
+            <a-entity class="geometry"
+                      geometry="primitive: circle; radius: 0.2"
+                      material="side: double; transparent: true; opacity: 0"
+                      event-set__3="_event: mouseenter; scale: 1.2 1.2 1"
+                      event-set__4="_event: mouseleave; scale: 1 1 1"
+                      sound="on: click; src: #click-sound"
+                      pressable="on: click; src: ${behavior}">
+                <a-entity geometry="primitive: ring; radiusInner: 0.16; radiusOuter: 0.2"
+                          material="side: double; color: #cccccc"></a-entity>
+                <a-image src="${img}" rotation="${rotation}" height="0.2" width="0.2" transparent="true"></a-image>
             </a-entity>
         </script>
     </a-assets>
@@ -90,7 +113,30 @@
     </a-entity>
 
     <a-entity id="menu" visible="false" look-at="[camera]">
-        <a-entity look-at="[camera]" position="-0.6 0 0.25">
+        <a-entity id="menu-main" look-at="[camera]" position="0 0 0" visible="true">
+            <a-entity scale="0.6 0.6 0.6">
+                <a-entity template="src: #img-button"
+                          position="-0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="go_to_geometry"
+                          data-img="#icon-geometry"
+                          data-rotation="0 0 0"></a-entity>
+                <a-entity template="src: #img-button"
+                          position="0 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="tp"
+                          data-img="#icon-teleport"
+                          data-rotation="0 0 -135"></a-entity>
+                <a-entity template="src: #img-button"
+                          position="0.5 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="go_to_property"
+                          data-img="#icon-property"
+                          data-rotation="0 0 0"></a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity id="menu-geometry" look-at="[camera]" position="0 0 -1" visible="false">
             <a-entity scale="0.6 0.6 0.6">
                 <a-entity template="src: #geometry"
                           position="0 0.5 0"
@@ -137,69 +183,145 @@
                           rotation="0 0 0"
                           data-primitive="torusKnot"
                           data-scale="0.05"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 -1 0"
+                          rotation="0 0 0"
+                          data-behavior="back_to_main"
+                          data-text=""></a-entity>
             </a-entity>
         </a-entity>
 
-        <a-entity look-at="[camera]" scale="0.6 0.6 0.6">
-            <a-entity template="src: #button"
-                      position="0 0.5 0"
-                      rotation="0 0 0"
-                      data-behavior="del"
-                      data-text="D"></a-entity>
-            <a-entity template="src: #button"
-                      position="0 0 0"
-                      rotation="0 0 0"
-                      data-behavior="tp"
-                      data-text="T"></a-entity>
-        </a-entity>
-
-        <a-entity look-at="[camera]" position="0.6 0 0.25">
+        <a-entity id="menu-property" look-at="[camera]" position="0 0 -1" visible="false">
             <a-entity scale="0.6 0.6 0.6">
-                <a-entity template="src: #button"
-                          position="0 0.5 0"
+                <a-entity template="src: #img-button"
+                          position="-0.5 0 0"
                           rotation="0 0 0"
-                          data-behavior="size-"
-                          data-text="-"></a-entity>
-                <a-entity template="src: #button"
+                          data-behavior="go_to_resize"
+                          data-img="#icon-resize"
+                          data-rotation="0 0 0"></a-entity>
+                <a-entity template="src: #img-button"
                           position="0 0 0"
                           rotation="0 0 0"
-                          data-behavior="rotation-"
-                          data-text="-"></a-entity>
-                <a-entity template="src: #button"
-                          position="0 -0.5 0"
-                          rotation="0 0 0"
-                          data-behavior="position-"
-                          data-text="-"></a-entity>
-                <a-entity template="src: #button"
-                          position="0.5 0.5 0"
-                          rotation="0 0 0"
-                          data-behavior="size+"
-                          data-text="+"></a-entity>
-                <a-entity template="src: #button"
+                          data-behavior="go_to_rotate"
+                          data-img="#icon-rotate"
+                          data-rotation="0 0 0"></a-entity>
+                <a-entity template="src: #img-button"
                           position="0.5 0 0"
                           rotation="0 0 0"
-                          data-behavior="rotation+"
-                          data-text="+"></a-entity>
-                <a-entity template="src: #button"
-                          position="0.5 -0.5 0"
+                          data-behavior="go_to_reposition"
+                          data-img="#icon-reposition"
+                          data-rotation="0 0 0"></a-entity>
+                <a-entity template="src: #img-button"
+                          position="-0.25 -0.5 0"
                           rotation="0 0 0"
-                          data-behavior="position+"
-                          data-text="+"></a-entity>
+                          data-behavior="del"
+                          data-img="#icon-delete"
+                          data-rotation="0 0 0"></a-entity>
                 <a-entity template="src: #button"
-                          position="-0.5 0.5 0"
+                          position="0.25 -0.5 0"
                           rotation="0 0 0"
-                          data-behavior="axis-x"
-                          data-text="X"></a-entity>
+                          data-behavior="back_to_main"
+                          data-text=""></a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity id="menu-resize" look-at="[camera]" position="0 0 -1" visible="false">
+            <a-entity scale="0.6 0.6 0.6">
                 <a-entity template="src: #button"
                           position="-0.5 0 0"
                           rotation="0 0 0"
-                          data-behavior="axis-y"
-                          data-text="Y"></a-entity>
+                          data-behavior="scale_down"
+                          data-text="S"></a-entity>
                 <a-entity template="src: #button"
-                          position="-0.5 -0.5 0"
+                          position="0 0 0"
                           rotation="0 0 0"
-                          data-behavior="axis-z"
-                          data-text="Z"></a-entity>
+                          data-behavior="scale_up"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="back_to_property"
+                          data-text=""></a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity id="menu-rotate" look-at="[camera]" position="0 0 -1" visible="false">
+            <a-entity scale="0.6 0.6 0.6">
+                <a-entity template="src: #button"
+                          position="-0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_x_clockwise"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="-0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_x_anticlockwise"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_y_clockwise"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 0 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_y_anticlockwise"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_z_clockwise"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="rotate_z_anticlockwise"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="back_to_property"
+                          data-text=""></a-entity>
+            </a-entity>
+        </a-entity>
+
+        <a-entity id="menu-reposition" look-at="[camera]" position="0 0 -1" visible="false">
+            <a-entity scale="0.6 0.6 0.6">
+                <a-entity template="src: #button"
+                          position="-0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="move_x_forward"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="-0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="move_x_backward"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="move_y_forward"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 0 0"
+                          rotation="0 0 0"
+                          data-behavior="move_y_backward"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="move_z_forward"
+                          data-text="rxc"></a-entity>
+                <a-entity template="src: #button"
+                          position="0.5 0 0"
+                          rotation="0 0 0"
+                          data-behavior="move_z_backward"
+                          data-text="L"></a-entity>
+                <a-entity template="src: #button"
+                          position="0 -0.5 0"
+                          rotation="0 0 0"
+                          data-behavior="back_to_property"
+                          data-text=""></a-entity>
             </a-entity>
         </a-entity>
     </a-entity>

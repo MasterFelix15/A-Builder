@@ -19,9 +19,17 @@ AFRAME.registerComponent('pressable', {
             var menuEl = document.querySelector('#menu');
             var avatarEl = document.querySelector('#avatar');
             var location = markerEl.getAttribute('position');
-            var scale = markedEl.getAttribute('scale');
-            var rotation = markedEl.getAttribute('rotation');
-            var position = markedEl.getAttribute('position');
+            if (markedEl != null) {
+                var scale = markedEl.getAttribute('scale');
+                var rotation = markedEl.getAttribute('rotation');
+                var position = markedEl.getAttribute('position');
+            }
+            var menu_main = document.querySelector('#menu-main');
+            var menu_geometry = document.querySelector('#menu-geometry');
+            var menu_property = document.querySelector('#menu-property');
+            var menu_resize = document.querySelector('#menu-resize');
+            var menu_rotate = document.querySelector('#menu-rotate');
+            var menu_reposition = document.querySelector('#menu-reposition');
             var selectedAxis = "x";
             if (yarrowEl.getAttribute('material').color === "#FF4E50") {
                 selectedAxis = "y";
@@ -34,6 +42,56 @@ AFRAME.registerComponent('pressable', {
                     avatarEl.setAttribute('position', location.x + " 1 " + location.z);
                     markerEl.setAttribute('visible', false);
                     menuEl.setAttribute('visible', false);
+                    break;
+                case "go_to_geometry":
+                    menu_main.setAttribute('position', "0 0 -1");
+                    menu_main.setAttribute('visible', "false");
+                    menu_geometry.setAttribute('position', "0 0 0");
+                    menu_geometry.setAttribute('visible', "true");
+                    break;
+                case "go_to_property":
+                    if (markedEl != null) {
+                        menu_main.setAttribute('position', "0 0 -1");
+                        menu_main.setAttribute('visible', "false");
+                        menu_property.setAttribute('position', "0 0 0");
+                        menu_property.setAttribute('visible', "true");
+                    }
+                    break;
+                case "back_to_main":
+                    menu_geometry.setAttribute('position', "0 0 -1");
+                    menu_geometry.setAttribute('visible', "false");
+                    menu_property.setAttribute('position', "0 0 -1");
+                    menu_property.setAttribute('visible', "false");
+                    menu_main.setAttribute('position', "0 0 0");
+                    menu_main.setAttribute('visible', "true");
+                    break;
+                case "go_to_resize":
+                    menu_property.setAttribute('position', "0 0 -1");
+                    menu_property.setAttribute('visible', "false");
+                    menu_resize.setAttribute('position', "0 0 0");
+                    menu_resize.setAttribute('visible', "true");
+                    break;
+                case "go_to_rotate":
+                    menu_property.setAttribute('position', "0 0 -1");
+                    menu_property.setAttribute('visible', "false");
+                    menu_rotate.setAttribute('position', "0 0 0");
+                    menu_rotate.setAttribute('visible', "true");
+                    break;
+                case "go_to_reposition":
+                    menu_property.setAttribute('position', "0 0 -1");
+                    menu_property.setAttribute('visible', "false");
+                    menu_reposition.setAttribute('position', "0 0 0");
+                    menu_reposition.setAttribute('visible', "true");
+                    break;
+                case "back_to_property":
+                    menu_rotate.setAttribute('position', "0 0 -1");
+                    menu_rotate.setAttribute('visible', "false");
+                    menu_resize.setAttribute('position', "0 0 -1");
+                    menu_resize.setAttribute('visible', "false");
+                    menu_reposition.setAttribute('position', "0 0 -1");
+                    menu_reposition.setAttribute('visible', "false");
+                    menu_property.setAttribute('position', "0 0 0");
+                    menu_property.setAttribute('visible', "true");
                     break;
                 case "del":
                     var copy = axisEl.cloneNode(true);
