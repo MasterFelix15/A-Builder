@@ -13,6 +13,10 @@ AFRAME.registerComponent('selectable', {
             var menuEl = document.querySelector('#menu');
             var sceneEl = document.querySelector('a-scene');
 
+            if (markerEl.getAttribute('visible') === false) {return;}
+            markerEl.setAttribute('visible', "false");
+            menuEl.setAttribute('visible', "false");
+
             var matrix = new THREE.Matrix4();
             matrix.extractRotation( markerEl.object3D.matrix );
 
@@ -34,14 +38,6 @@ AFRAME.registerComponent('selectable', {
             var lookAtTarget = new THREE.Vector3().addVectors(calculated_position, direction);
             entityEl.object3D.lookAt(lookAtTarget);
             entityEl.removeAttribute('id');
-
-            markerEl.setAttribute('visible', "false");
-            menuEl.setAttribute('visible', "false");
-
-            entityEl = document.querySelector("#" + data.src + "-prototype");
-            entityEl.setAttribute('visible', false);
-            entityEl.setAttribute('position', "0 0 0");
-
         });
     }
 });
