@@ -30,6 +30,7 @@ AFRAME.registerComponent('pressable', {
             var menu_resize = document.querySelector('#menu-resize');
             var menu_rotate = document.querySelector('#menu-rotate');
             var menu_reposition = document.querySelector('#menu-reposition');
+            var wormhole = document.querySelector('#wormhole');
             var selectedAxis = "x";
             if (yarrowEl.getAttribute('material').color === "#FF4E50") {
                 selectedAxis = "y";
@@ -39,9 +40,14 @@ AFRAME.registerComponent('pressable', {
             console.log(xarrowEl.getAttribute('material').color);
             switch (data.src) {
                 case "tp":
-                    avatarEl.setAttribute('position', location.x + " 1 " + location.z);
-                    markerEl.setAttribute('visible', false);
-                    menuEl.setAttribute('visible', false);
+                    wormhole.setAttribute('visible', "true");
+                    wormhole.emit('teleportation-start');
+                    setTimeout(function () {
+                        avatarEl.setAttribute('position', location.x + " 1 " + location.z);
+                        markerEl.setAttribute('visible', "false");
+                        menuEl.setAttribute('visible', "false");
+                        wormhole.setAttribute('visible', "false");
+                    }, 500);
                     break;
                 case "go_to_geometry":
                     menu_main.setAttribute('position', "0 0 -1");
@@ -101,78 +107,47 @@ AFRAME.registerComponent('pressable', {
                     markerEl.setAttribute('visible', false);
                     menuEl.setAttribute('visible', false);
                     break;
-                case "axis-x":
-                    selectedAxis = "x";
-                    xarrowEl.setAttribute('material', "side: double; color: #FF4E50");
-                    yarrowEl.setAttribute('material', "side: double; color: #2A363B");
-                    zarrowEl.setAttribute('material', "side: double; color: #2A363B");
+                case "scale_down":
+                    markedEl.setAttribute('scale', new THREE.Vector3(scale.x * 0.9, scale.y * 0.9, scale.z * 0.9));
                     break;
-                case "axis-y":
-                    selectedAxis = "y";
-                    yarrowEl.setAttribute('material', "side: double; color: #FF4E50");
-                    xarrowEl.setAttribute('material', "side: double; color: #2A363B");
-                    zarrowEl.setAttribute('material', "side: double; color: #2A363B");
+                case "scale_up":
+                    markedEl.setAttribute('scale', new THREE.Vector3(scale.x / 0.9, scale.y / 0.9, scale.z / 0.9));
                     break;
-                case "axis-z":
-                    selectedAxis = "z";
-                    zarrowEl.setAttribute('material', "side: double; color: #FF4E50");
-                    yarrowEl.setAttribute('material', "side: double; color: #2A363B");
-                    xarrowEl.setAttribute('material', "side: double; color: #2A363B");
+                case "rotate_x_c":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x - 15, rotation.y, rotation.z));
                     break;
-                case "size-":
-                    if (selectedAxis === "x") {
-                        console.log(markedEl.childNodes);
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x * 0.9, scale.y, scale.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x, scale.y * 0.9, scale.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x, scale.y, scale.z * 0.9));
-                    }
+                case "rotate_x_cc":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x + 15, rotation.y, rotation.z));
                     break;
-                case "size+":
-                    if (selectedAxis === "x") {
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x / 0.9, scale.y, scale.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x, scale.y / 0.9, scale.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('scale', new THREE.Vector3(scale.x, scale.y, scale.z / 0.9));
-                    }
+                case "rotate_y_c":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y - 15, rotation.z));
                     break;
-                case "rotation-":
-                    if (selectedAxis === "x") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x - 15, rotation.y, rotation.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y - 15, rotation.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y, rotation.z - 15));
-                    }
+                case "rotate_y_cc":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y + 15, rotation.z));
                     break;
-                case "rotation+":
-                    if (selectedAxis === "x") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x + 15, rotation.y, rotation.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y + 15, rotation.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y, rotation.z + 15));
-                    }
+                case "rotate_z_c":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y, rotation.z - 15));
                     break;
-                case "position-":
-                    if (selectedAxis === "x") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x - 0.05, position.y, position.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y - 0.05, position.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y, position.z - 0.05));
-                    }
+                case "rotate_z_cc":
+                    markedEl.setAttribute('rotation', new THREE.Vector3(rotation.x, rotation.y, rotation.z + 15));
                     break;
-                case "position+":
-                    if (selectedAxis === "x") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x + 0.05, position.y, position.z));
-                    } else if (selectedAxis === "z") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y + 0.05, position.z));
-                    } else if (selectedAxis === "y") {
-                        markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y, position.z + 0.05));
-                    }
+                case "move_x_forward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x - 0.05, position.y, position.z));
+                    break;
+                case "move_x_backward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x + 0.05, position.y, position.z));
+                    break;
+                case "move_y_forward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y - 0.05, position.z));
+                    break;
+                case "move_y_backward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y + 0.05, position.z));
+                    break;
+                case "move_z_forward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y, position.z - 0.05));
+                    break;
+                case "move_z_backward":
+                    markedEl.setAttribute('position', new THREE.Vector3(position.x, position.y, position.z + 0.05));
                     break;
             }
 

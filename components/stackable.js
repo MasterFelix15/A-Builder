@@ -48,6 +48,28 @@ AFRAME.registerComponent('stackable', {
 
             axisEl = document.querySelector('#axis-system');
             axisEl.setAttribute('visible', el.getAttribute('id')!=="plane");
+
+
+            // reset menu
+            var menu_main = document.querySelector('#menu-main');
+            var menu_geometry = document.querySelector('#menu-geometry');
+            var menu_property = document.querySelector('#menu-property');
+            var menu_resize = document.querySelector('#menu-resize');
+            var menu_rotate = document.querySelector('#menu-rotate');
+            var menu_reposition = document.querySelector('#menu-reposition');
+
+            menu_geometry.setAttribute('position', "0 0 -1");
+            menu_geometry.setAttribute('visible', "false");
+            menu_property.setAttribute('position', "0 0 -1");
+            menu_property.setAttribute('visible', "false");
+            menu_resize.setAttribute('position', "0 0 -1");
+            menu_resize.setAttribute('visible', "false");
+            menu_rotate.setAttribute('position', "0 0 -1");
+            menu_rotate.setAttribute('visible', "false");
+            menu_reposition.setAttribute('position', "0 0 -1");
+            menu_reposition.setAttribute('visible', "false");
+            menu_main.setAttribute('position', "0 0 0");
+            menu_main.setAttribute('visible', "true");
         });
     }
 });
